@@ -1,23 +1,22 @@
-# Build
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /app
+WORKDIR /src
+COPY ["WebApi.csproj", "WebApi/"]
+RUN dotnet restore "WebApi/WebApi.csproj"
 
-COPY *.sln ./
-RUN mkdir -p Blog/WebApi
-COPY Blog/WebApi/*.csproj ./Blog/WebApi/
-RUN dotnet restore
-
+WORKDIR "/src/WebApi"
 COPY . .
-WORKDIR /app/Blog/WebApi
 
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet build "WebApi.csproj" -c Release -o /app/build
 
-# Run
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM build AS publish
+RUN dotnet publish "WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out .
-
-ENV ASPNETCORE_URLS=http://+:8080
-EXPOSE 8080
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebApi.dll"]
