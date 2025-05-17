@@ -3,11 +3,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS build
 WORKDIR /app
 
 COPY *.sln .
-COPY WebApi/*.csproj ./WebApi/
+COPY Blog/WebApi/*.csproj ./Blog/WebApi/
 RUN dotnet restore
 
 COPY . .
-RUN dotnet publish -c Release -o out
+WORKDIR /app/Blog/WebApi
+RUN dotnet publish -c Release -o /app/out
 
 # Run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
@@ -17,4 +18,4 @@ COPY --from=build /app/out .
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "Blog/WebApi.dll"]
