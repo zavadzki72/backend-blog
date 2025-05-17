@@ -6,6 +6,7 @@ using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
 var mongoConnectionString = Environment.GetEnvironmentVariable("MongoDbConnectionString");
 
 if (string.IsNullOrWhiteSpace(mongoConnectionString))
