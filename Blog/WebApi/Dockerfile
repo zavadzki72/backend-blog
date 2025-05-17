@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Copiar arquivos do projeto para dentro do contexto
 COPY *.sln ./
+RUN mkdir -p Blog/WebApi
 COPY Blog/WebApi/*.csproj ./Blog/WebApi/
 RUN dotnet restore
 
