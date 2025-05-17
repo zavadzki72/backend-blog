@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS build
 WORKDIR /app
 
-COPY *.sln .
+COPY Blog/*.sln .
 COPY Blog/WebApi/*.csproj ./Blog/WebApi/
 RUN dotnet restore
 
