@@ -14,7 +14,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetPaginated(GetPostPaginatedDto request)
+        public async Task<IActionResult> GetPaginated([FromQuery] GetPostPaginatedDto request)
         {
             var result = await _service.GetPaginatedPostsAsync(request);
             return Ok(new { Data = result });
