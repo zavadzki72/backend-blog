@@ -39,6 +39,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("access-url")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAccessUrl([FromQuery] string key)
         {
             var url = await _fileService.GeneratePresignedUrl(key, TimeSpan.FromMinutes(10));

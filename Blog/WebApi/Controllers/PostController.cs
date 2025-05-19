@@ -13,6 +13,7 @@ namespace WebApi.Controllers
         private readonly PostService _service = service;
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPaginated(GetPostPaginatedDto request)
         {
             var result = await _service.GetPaginatedPostsAsync(request);
@@ -55,6 +56,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPatch("/up-vote")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpVote(Guid id)
         {
             await _service.UpVote(id);
@@ -62,6 +64,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPatch("/view")]
+        [AllowAnonymous]
         public async Task<IActionResult> View(Guid id)
         {
             await _service.View(id);

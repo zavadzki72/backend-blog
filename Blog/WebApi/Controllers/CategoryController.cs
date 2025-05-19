@@ -13,6 +13,7 @@ namespace WebApi.Controllers
         private readonly CategoryService _service = service;
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             var categories = await _service.GetAll();
