@@ -101,7 +101,7 @@ namespace WebApi.Services
         {
             request.Validate();
 
-            var categories = await _context.Categories.Find(x => request.Categories.Contains(x.Name)).ToListAsync();
+            var categories = await _context.Categories.Find(x => request.Categories.Contains(x.Id)).ToListAsync();
             if(categories.Count != request.Categories.Count)
                 throw new ArgumentException("Categorias invalidas.");
 
@@ -118,7 +118,7 @@ namespace WebApi.Services
             var post = await _context.Posts.Find(x => x.Id == id).FirstOrDefaultAsync()
                 ?? throw new ArgumentException("O Post informado nao foi encontrado.");
 
-            var categories = await _context.Categories.Find(x => request.Categories.Contains(x.Name)).ToListAsync();
+            var categories = await _context.Categories.Find(x => request.Categories.Contains(x.Id)).ToListAsync();
             if (categories.Count != request.Categories.Count)
                 throw new ArgumentException("Categorias invalidas.");
 

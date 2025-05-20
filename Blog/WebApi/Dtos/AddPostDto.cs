@@ -8,7 +8,7 @@ namespace WebApi.Dtos
         public required string SubTitle { get; init; }
         public required string Content { get; init; }
         public required string CoverImageUrl { get; init; }
-        public List<string> Categories { get; init; } = [];
+        public List<Guid> Categories { get; init; } = [];
         public List<string> Tags { get; init; } = [];
 
         public void Validate()

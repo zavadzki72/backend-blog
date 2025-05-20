@@ -13,7 +13,7 @@ namespace WebApi.Controllers
         private readonly UserService _userService = userService;
 
         [HttpPost("upload/post-files")]
-        public async Task<IActionResult> Upload(IFormFile file, Guid postId)
+        public async Task<IActionResult> Upload([FromForm] IFormFile file, [FromForm] Guid postId)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("Arquivo inválido.");
