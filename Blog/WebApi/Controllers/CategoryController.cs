@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Dtos;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -21,14 +22,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Category request)
+        public async Task<IActionResult> Post(AddCategoryDto request)
         {
             await _service.Add(request);
             return Created();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, Category request)
+        public async Task<IActionResult> Put(Guid id, AddCategoryDto request)
         {
             await _service.Update(id, request);
             return NoContent();

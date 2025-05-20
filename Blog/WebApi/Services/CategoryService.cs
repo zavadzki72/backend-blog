@@ -1,6 +1,7 @@
 ﻿using WebApi.Data;
 using WebApi.Models;
 using MongoDB.Driver;
+using WebApi.Dtos;
 
 namespace WebApi.Services
 {
@@ -13,19 +14,20 @@ namespace WebApi.Services
             return await _context.Categories.Find(_ => true).ToListAsync();
         }
 
-        public async Task Add(Category request)
+        public async Task Add(AddCategoryDto request)
         {
-            await _context.Categories.InsertOneAsync(request);
+            var category = new Category(request.Name);
+            await _context.Categories.InsertOneAsync(category);
         }
 
-        public async Task Update(Guid id, Category request)
+        public async Task Update(Guid id, AddCategoryDto request)
         {
             var category = await _context.Categories.Find(x => x.Id == id).FirstOrDefaultAsync()
                 ?? throw new ArgumentException("A Categoria informada nao foi encontrada.");
 
             category.Update(request.Name);
 
-            await _context.Categories.ReplaceOneAsync(x => x.Id == id, request);
+            await _context.Categories.ReplaceOneAsync(x => x.Id == id, category);
         }
 
         public async Task Delete(Guid id)
