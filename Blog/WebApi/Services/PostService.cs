@@ -12,6 +12,32 @@ namespace WebApi.Services
         private readonly MongoContext _context = context;
         private readonly UserService _userService = userService;
 
+        public async Task<PostResponse> GetById(Guid id)
+        {
+            var post = await _context.Posts.Find(x => x.Id == id).FirstOrDefaultAsync()
+                ?? throw new ArgumentException("O Post com o id informado não foi encontrado");
+
+            var categories = await _context.Categories.Find(_ => true).ToListAsync();
+
+            var postResponse = new PostResponse
+            {
+                Id = post.Id,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt,
+                Title = post.Title,
+                SubTitle = post.SubTitle,
+                Content = post.Content,
+                CoverImageUrl = post.CoverImageUrl,
+                Views = post.Views,
+                UpVotes = post.UpVotes,
+                UserId = post.UserId,
+                Tags = post.Tags,
+                Categories = categories.Where(x => post.Categories.Contains(x.Id)).ToDictionary(x => x.Id, x => x.Name)
+            };
+
+            return postResponse;
+        }
+
         public async Task<PaginatedPostResponse> GetPaginatedPostsAsync(GetPostPaginatedDto request)
         {
             request.Validate();

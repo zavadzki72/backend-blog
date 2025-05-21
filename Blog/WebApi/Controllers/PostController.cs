@@ -20,6 +20,14 @@ namespace WebApi.Controllers
             return Ok(new { Data = result });
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _service.GetById(id);
+            return Ok(new { Data = result });
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(AddPostDto request)
         {
