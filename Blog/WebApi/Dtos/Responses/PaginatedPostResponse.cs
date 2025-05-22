@@ -29,7 +29,7 @@
         public required string Title { get; init; }
         public required string SubTitle { get;   init; }
         public required string Content { get; init; }
-        public required Guid UserId { get; init; }
+        public required UserResponse User { get; init; }
         public required string CoverImageUrl { get; init; }
         public required Dictionary<Guid, string> Categories { get; init; }
         public required List<string> Tags { get; init; }

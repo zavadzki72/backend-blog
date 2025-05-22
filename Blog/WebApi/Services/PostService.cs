@@ -18,6 +18,8 @@ namespace WebApi.Services
                 ?? throw new ArgumentException("O Post com o id informado não foi encontrado");
 
             var categories = await _context.Categories.Find(_ => true).ToListAsync();
+            var user = await _context.Users.Find(x => x.Id == post.UserId).FirstOrDefaultAsync()
+                ?? throw new ArgumentException("O Usuario do Post informado nao foi encontrado.");
 
             var postResponse = new PostResponse
             {
@@ -30,7 +32,16 @@ namespace WebApi.Services
                 CoverImageUrl = post.CoverImageUrl,
                 Views = post.Views,
                 UpVotes = post.UpVotes,
-                UserId = post.UserId,
+                User = new UserResponse
+                {
+                    Id = user.Id,
+                    CreatedAt = user.CreatedAt,
+                    UpdatedAt = user.UpdatedAt,
+                    Name = user.Name,
+                    Description = user.Description,
+                    PictureUrl = user.PictureUrl,
+                    SiteUrl = user.SiteUrl
+                },
                 Tags = post.Tags,
                 Categories = categories.Where(x => post.Categories.Contains(x.Id)).ToDictionary(x => x.Id, x => x.Name)
             };
@@ -103,20 +114,36 @@ namespace WebApi.Services
                 .ToListAsync();
             var categoryDict = categories.ToDictionary(c => c.Id, c => c.Name);
 
-            var data = posts.Select(p => new PostResponse
-            {
-                Id = p.Id,
-                CreatedAt = p.CreatedAt,
-                UpdatedAt = p.UpdatedAt,
-                Title = p.Title,
-                SubTitle = p.SubTitle,
-                Content = p.Content,
-                UserId = p.UserId,
-                CoverImageUrl = p.CoverImageUrl,
-                Categories = p.Categories.Where(id => categoryDict.ContainsKey(id)).ToDictionary(id => id, id => categoryDict[id]),
-                Tags = p.Tags,
-                Views = p.Views,
-                UpVotes = p.UpVotes
+            var users = await _context.Users.Find(x => posts.Select(x => x.UserId).Contains(x.Id)).ToListAsync();
+
+            var data = posts.Select(p => {
+                var user = users.FirstOrDefault(x => x.Id == p.UserId)
+                    ?? throw new ArgumentException("O Usuario do Post informado nao foi encontrado.");
+
+                return new PostResponse
+                {
+                    Id = p.Id,
+                    CreatedAt = p.CreatedAt,
+                    UpdatedAt = p.UpdatedAt,
+                    Title = p.Title,
+                    SubTitle = p.SubTitle,
+                    Content = p.Content,
+                    User = new UserResponse
+                    {
+                        Id = user.Id,
+                        CreatedAt = user.CreatedAt,
+                        UpdatedAt = user.UpdatedAt,
+                        Name = user.Name,
+                        Description = user.Description,
+                        PictureUrl = user.PictureUrl,
+                        SiteUrl = user.SiteUrl
+                    },
+                    CoverImageUrl = p.CoverImageUrl,
+                    Categories = p.Categories.Where(id => categoryDict.ContainsKey(id)).ToDictionary(id => id, id => categoryDict[id]),
+                    Tags = p.Tags,
+                    Views = p.Views,
+                    UpVotes = p.UpVotes
+                };
             }).ToList();
 
             var totalItems = await _context.Posts.CountDocumentsAsync(filter);
