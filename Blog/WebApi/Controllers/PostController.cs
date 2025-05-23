@@ -49,21 +49,21 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPatch("/archive")]
+        [HttpPatch("archive")]
         public async Task<IActionResult> Archive(Guid id)
         {
             await _service.ArchivePost(id);
             return NoContent();
         }
 
-        [HttpPatch("/reactivate")]
+        [HttpPatch("reactivate")]
         public async Task<IActionResult> Reactivate(Guid id)
         {
             await _service.ReactivatePost(id);
             return NoContent();
         }
 
-        [HttpPatch("/up-vote")]
+        [HttpPatch("up-vote")]
         [AllowAnonymous]
         public async Task<IActionResult> UpVote(Guid id)
         {
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPatch("/view")]
+        [HttpPatch("view")]
         [AllowAnonymous]
         public async Task<IActionResult> View(Guid id)
         {
