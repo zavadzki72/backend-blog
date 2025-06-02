@@ -1,7 +1,8 @@
-﻿using WebApi.Data;
-using WebApi.Models;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using WebApi.Data;
 using WebApi.Dtos;
+using WebApi.Dtos.Responses;
+using WebApi.Models;
 
 namespace WebApi.Services
 {
@@ -9,9 +10,26 @@ namespace WebApi.Services
     {
         private readonly MongoContext _context = context;
 
-        public async Task<List<Category>> GetAll()
+        public async Task<List<CategoryResponse>> GetAll()
         {
-            return await _context.Categories.Find(_ => true).ToListAsync();
+            var categories = await _context.Categories
+                .Find(_ => true)
+                .Project(x => new CategoryResponse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CreatedAt = x.CreatedAt,
+                    UpdatedAt = x.UpdatedAt,
+                    PostQuantity = 0
+                })
+                .ToListAsync();
+
+            foreach (var category in categories)
+            {
+                category.PostQuantity = (int)await _context.Posts.CountDocumentsAsync(p => p.Categories.Contains(category.Id));
+            }
+
+            return categories;
         }
 
         public async Task Add(AddCategoryDto request)
