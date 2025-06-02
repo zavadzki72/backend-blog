@@ -9,22 +9,28 @@ namespace WebApi.Models
         public Post() 
         {
             Title = string.Empty;
+            TitleEnglish = string.Empty;
             SubTitle = string.Empty;
+            SubTitleEnglish = string.Empty;
             Content = string.Empty;
+            ContentEnglish = string.Empty;
             CoverImageUrl = string.Empty;
             Tags = [];
             Categories = [];
         }
 
-        public Post(string title, string subTitle, string content, Guid userId, string coverImageUrl, List<Category> categories, List<string> tags)
+        public Post(string title, string titleEnglish, string subTitle, string subTitleEnglish, string content, string contentEnglish, Guid userId, string coverImageUrl, List<Category> categories, List<string> tags)
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
 
             Title = title;
+            TitleEnglish = string.IsNullOrWhiteSpace(titleEnglish) ? title : titleEnglish;
             SubTitle = subTitle;
+            SubTitleEnglish = string.IsNullOrWhiteSpace(subTitleEnglish) ? subTitle : subTitleEnglish;
             Content = content;
+            ContentEnglish = string.IsNullOrWhiteSpace(contentEnglish) ? content : contentEnglish;
             CoverImageUrl = coverImageUrl;
             Tags = tags;
 
@@ -49,11 +55,20 @@ namespace WebApi.Models
         [BsonElement("title")]
         public string Title { get; private set; }
 
+        [BsonElement("title_english")]
+        public string TitleEnglish { get; private set; }
+
         [BsonElement("sub_title")]
         public string SubTitle { get; private set; }
 
+        [BsonElement("sub_title_english")]
+        public string SubTitleEnglish { get; private set; }
+
         [BsonElement("content")]
         public string Content { get; private set; }
+
+        [BsonElement("content_english")]
+        public string ContentEnglish { get; private set; }
 
         [BsonElement("user_id")]
         [BsonRepresentation(BsonType.String)]

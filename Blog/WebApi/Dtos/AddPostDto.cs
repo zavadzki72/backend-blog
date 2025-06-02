@@ -5,8 +5,11 @@ namespace WebApi.Dtos
     public record AddPostDto
     {
         public required string Title { get; init; }
+        public required string TitleEnglish { get; init; }
         public required string SubTitle { get; init; }
+        public required string SubTitleEnglish { get; init; }
         public required string Content { get; init; }
+        public required string ContentEnglish { get; init; }
         public required string CoverImageUrl { get; init; }
         public List<Guid> Categories { get; init; } = [];
         public List<string> Tags { get; init; } = [];
