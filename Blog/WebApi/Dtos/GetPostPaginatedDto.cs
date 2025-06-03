@@ -1,4 +1,6 @@
-﻿namespace WebApi.Dtos
+﻿using WebApi.Enumerators;
+
+namespace WebApi.Dtos
 {
     public record GetPostPaginatedDto
     {
@@ -11,6 +13,7 @@
         public List<Guid> UsersId { get; init; } = [];
         public List<Guid> Categories { get; init; } = [];
         public List<string> Tags { get; init; } = [];
+        public List<PostStatus> Statuses { get; init; } = [];
 
         public GetPostPaginatedOrder OrderType { get; init; } = GetPostPaginatedOrder.Recents;
 

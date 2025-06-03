@@ -86,6 +86,11 @@ namespace WebApi.Services
                 filter &= filterBuilder.AnyIn(p => p.Tags, request.Tags);
             }
 
+            if (request.Statuses.Count != 0)
+            {
+                filter &= filterBuilder.In(p => p.Status, request.Statuses);
+            }
+
             if (request.MinCreatedAt.HasValue)
             {
                 filter &= filterBuilder.Gte(p => p.CreatedAt, request.MinCreatedAt.Value);
