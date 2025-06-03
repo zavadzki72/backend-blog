@@ -14,12 +14,11 @@ namespace WebApi.Models
             SubTitleEnglish = string.Empty;
             Content = string.Empty;
             ContentEnglish = string.Empty;
-            CoverImageUrl = string.Empty;
             Tags = [];
             Categories = [];
         }
 
-        public Post(string title, string titleEnglish, string subTitle, string subTitleEnglish, string content, string contentEnglish, Guid userId, string coverImageUrl, List<Category> categories, List<string> tags)
+        public Post(string title, string titleEnglish, string subTitle, string subTitleEnglish, string content, string contentEnglish, Guid userId, List<Category> categories, List<string> tags)
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
@@ -31,7 +30,6 @@ namespace WebApi.Models
             SubTitleEnglish = string.IsNullOrWhiteSpace(subTitleEnglish) ? subTitle : subTitleEnglish;
             Content = content;
             ContentEnglish = string.IsNullOrWhiteSpace(contentEnglish) ? content : contentEnglish;
-            CoverImageUrl = coverImageUrl;
             Tags = tags;
 
             Categories = [.. categories.Select(x => x.Id)];
@@ -78,7 +76,7 @@ namespace WebApi.Models
         public PostStatus Status { get; private set; }
 
         [BsonElement("cover_image_url")]
-        public string CoverImageUrl { get; private set; }
+        public string? CoverImageUrl { get; private set; }
 
         [BsonElement("categories")]
         [BsonRepresentation(BsonType.String)]

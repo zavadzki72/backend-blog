@@ -165,7 +165,7 @@ namespace WebApi.Services
                 throw new ArgumentException("Categorias invalidas.");
 
             var user = await _userService.GetLoggedUser();
-            var post = new Post(request.Title, request.TitleEnglish, request.SubTitle, request.SubTitleEnglish, request.Content, request.ContentEnglish, user.Id, request.CoverImageUrl, categories, request.Tags);
+            var post = new Post(request.Title, request.TitleEnglish, request.SubTitle, request.SubTitleEnglish, request.Content, request.ContentEnglish, user.Id, categories, request.Tags);
 
             await _context.Posts.InsertOneAsync(post);
         }
