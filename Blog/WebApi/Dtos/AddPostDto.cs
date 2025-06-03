@@ -10,7 +10,6 @@ namespace WebApi.Dtos
         public required string SubTitleEnglish { get; init; }
         public required string Content { get; init; }
         public required string ContentEnglish { get; init; }
-        public required string CoverImageUrl { get; init; }
         public List<Guid> Categories { get; init; } = [];
         public List<string> Tags { get; init; } = [];
 
@@ -24,9 +23,6 @@ namespace WebApi.Dtos
 
             if (Content.Length < 100)
                 throw new ArgumentException("O conteudo precisa ter no minimo 100 caracters.");
-
-            if (!Uri.TryCreate(CoverImageUrl, UriKind.RelativeOrAbsolute, out _))
-                throw new ArgumentException("Url de imagem invalida.");
 
             if(Categories.Count == 0)
                 throw new ArgumentException("O POST precisa ter no minimo 1 categoria.");

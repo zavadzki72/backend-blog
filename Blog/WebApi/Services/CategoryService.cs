@@ -50,6 +50,10 @@ namespace WebApi.Services
 
         public async Task Delete(Guid id)
         {
+            var postsOnCategory = await _context.Posts.Find(x => x.Categories.Contains(id)).FirstOrDefaultAsync();
+            if (postsOnCategory != null)
+                throw new ArgumentException("A Categoria informada nao pode ser deletada porque existem posts existentes nela.");
+
             var result = await _context.Categories.DeleteOneAsync(x => x.Id == id);
 
             if (result.DeletedCount == 0)
