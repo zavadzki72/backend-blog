@@ -234,5 +234,15 @@ namespace WebApi.Services
 
             await _context.Posts.ReplaceOneAsync(x => x.Id == id, post);
         }
+
+        public async Task UpdateImage(Guid id, string key)
+        {
+            var post = await _context.Posts.Find(x => x.Id == id).FirstOrDefaultAsync()
+                ?? throw new ArgumentException("O Post informado nao foi encontrado.");
+
+            post.SetCoverUrl(key);
+
+            await _context.Posts.ReplaceOneAsync(x => x.Id == id, post);
+        }
     }
 }

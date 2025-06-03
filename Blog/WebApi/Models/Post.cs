@@ -138,5 +138,10 @@ namespace WebApi.Models
             Status = PostStatus.Published;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void SetCoverUrl(string key)
+        {
+            CoverImageUrl = key;
+        }
     }
 }
