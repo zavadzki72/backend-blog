@@ -27,8 +27,11 @@
         public required DateTime CreatedAt { get; init; }
         public required DateTime UpdatedAt { get; init; }
         public required string Title { get; init; }
+        public required string TitleEnglish { get; init; }
         public required string SubTitle { get;   init; }
+        public required string SubTitleEnglish { get;   init; }
         public required string Content { get; init; }
+        public required string ContentEnglish { get; init; }
         public required UserResponse User { get; init; }
         public required string CoverImageUrl { get; init; }
         public required Dictionary<Guid, string> Categories { get; init; }

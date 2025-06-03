@@ -27,8 +27,11 @@ namespace WebApi.Services
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt,
                 Title = post.Title,
+                TitleEnglish = post.TitleEnglish,
                 SubTitle = post.SubTitle,
+                SubTitleEnglish = post.SubTitleEnglish,
                 Content = post.Content,
+                ContentEnglish = post.ContentEnglish,
                 CoverImageUrl = post.CoverImageUrl,
                 Views = post.Views,
                 UpVotes = post.UpVotes,
@@ -126,8 +129,11 @@ namespace WebApi.Services
                     CreatedAt = p.CreatedAt,
                     UpdatedAt = p.UpdatedAt,
                     Title = p.Title,
+                    TitleEnglish = p.TitleEnglish,
                     SubTitle = p.SubTitle,
+                    SubTitleEnglish = p.SubTitleEnglish,
                     Content = p.Content,
+                    ContentEnglish = p.ContentEnglish,
                     User = new UserResponse
                     {
                         Id = user.Id,
