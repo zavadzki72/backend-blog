@@ -33,10 +33,11 @@
         public required string Content { get; init; }
         public required string ContentEnglish { get; init; }
         public required UserResponse User { get; init; }
-        public required string CoverImageUrl { get; init; }
+        public string? CoverImageUrl { get; init; }
         public required Dictionary<Guid, string> Categories { get; init; }
         public required List<string> Tags { get; init; }
         public required int Views { get; init; }
         public required int UpVotes { get; init; }
+        public bool IsArchived { get; set; }
     }
 }

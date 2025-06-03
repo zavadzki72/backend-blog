@@ -1,8 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using WebApi.Data;
 using WebApi.Dtos;
 using WebApi.Dtos.Responses;
+using WebApi.Enumerators;
 using WebApi.Models;
 
 namespace WebApi.Services
@@ -35,6 +37,7 @@ namespace WebApi.Services
                 CoverImageUrl = post.CoverImageUrl,
                 Views = post.Views,
                 UpVotes = post.UpVotes,
+                IsArchived = post.Status == PostStatus.Archived,
                 User = new UserResponse
                 {
                     Id = user.Id,
@@ -148,7 +151,8 @@ namespace WebApi.Services
                     Categories = p.Categories.Where(id => categoryDict.ContainsKey(id)).ToDictionary(id => id, id => categoryDict[id]),
                     Tags = p.Tags,
                     Views = p.Views,
-                    UpVotes = p.UpVotes
+                    UpVotes = p.UpVotes,
+                    IsArchived = p.Status == PostStatus.Archived,
                 };
             }).ToList();
 
