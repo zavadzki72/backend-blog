@@ -93,13 +93,22 @@ namespace WebApi.Models
         [BsonElement("up_votes")]
         public int UpVotes { get; private set; }
 
-        public void Update(string title, string subTitle, string content, string coverImageUrl, List<Category> categories, List<string> tags)
+        public void Update(string title, string titleEnglish, string subTitle, string subTitleEnglish, string content, string contentEnglish, string coverImageUrl, List<Category> categories, List<string> tags)
         {
             Title = title;
             SubTitle = subTitle;
             Content = content;
             CoverImageUrl = coverImageUrl;
             Tags = tags;
+
+            if(!string.IsNullOrWhiteSpace(titleEnglish))
+                TitleEnglish = titleEnglish;
+
+            if (!string.IsNullOrWhiteSpace(subTitleEnglish))
+                SubTitleEnglish = subTitleEnglish;
+
+            if (!string.IsNullOrWhiteSpace(contentEnglish))
+                ContentEnglish = contentEnglish;
 
             Categories = [.. categories.Select(x => x.Id)];
 

@@ -175,7 +175,7 @@ namespace WebApi.Services
             if (categories.Count != request.Categories.Count)
                 throw new ArgumentException("Categorias invalidas.");
 
-            post.Update(request.Title, request.SubTitle, request.Content, request.CoverImageUrl, categories, request.Tags);
+            post.Update(request.Title, request.TitleEnglish, request.SubTitle, request.SubTitleEnglish, request.Content, request.ContentEnglish, request.CoverImageUrl, categories, request.Tags);
 
             await _context.Posts.ReplaceOneAsync(x => x.Id == id, post);
         }
