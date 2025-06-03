@@ -31,8 +31,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(AddPostDto request)
         {
-            await _service.CreatePost(request);
-            return Created();
+            var id = await _service.CreatePost(request);
+            return Ok(new { Data = id });
         }
 
         [HttpPut("{id}")]

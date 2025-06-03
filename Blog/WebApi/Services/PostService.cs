@@ -156,7 +156,7 @@ namespace WebApi.Services
             return new PaginatedPostResponse(data, (int)totalItems, request.Page, request.Size);
         }
 
-        public async Task CreatePost(AddPostDto request)
+        public async Task<Guid> CreatePost(AddPostDto request)
         {
             request.Validate();
 
@@ -168,6 +168,8 @@ namespace WebApi.Services
             var post = new Post(request.Title, request.TitleEnglish, request.SubTitle, request.SubTitleEnglish, request.Content, request.ContentEnglish, user.Id, categories, request.Tags);
 
             await _context.Posts.InsertOneAsync(post);
+
+            return post.Id;
         }
 
         public async Task UpdatePost(Guid id, UpdatePostDto request)
